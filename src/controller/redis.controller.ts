@@ -5,7 +5,7 @@ const add = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { key, id } = req.params;
     const maxSpots = 10;
-    await redisUtil.set(key, "0", 1000 * 60);
+    await redisUtil.set(key, "0", { EX: 1000 * 60 });
     const result = await redisUtil.incr(key);
     if (result > maxSpots) {
       await redisUtil.decr(key);

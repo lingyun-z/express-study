@@ -1,5 +1,5 @@
 import { Response, NextFunction } from "express";
-import chatService from "../service/chatService";
+import { socketUserService } from "../service";
 import { Request } from "../types";
 
 const getOnlineUsers = async (
@@ -8,7 +8,7 @@ const getOnlineUsers = async (
   next: NextFunction
 ) => {
   try {
-    const users = await chatService.getOnlineUsers();
+    const users = await socketUserService.getOnlineUsers();
 
     res.status(200).json({
       users,
