@@ -1,15 +1,13 @@
-import { Socket } from "socket.io";
-import { ChatMessageContent } from "../types";
+import { ChatMessageFromClient, Socket } from "../types";
 
 export const chatMessageHandler = (
   socket: Socket,
-  payload: ChatMessageContent
+  payload: ChatMessageFromClient
 ) => {
-  const { message, to } = payload;
+  const { content, to } = payload;
   const parsedMessage = {
-    message: message,
-    from: socket.request.session.user?.userName,
-    to: to,
+    content,
+    from: socket.data.user.userName,
     timestamp: new Date().getTime(),
   };
   socket.to(to).emit("chatMessage", parsedMessage);

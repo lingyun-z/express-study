@@ -1,13 +1,14 @@
 import { Session } from "express-session";
-
-export interface ServerToClientEvents {
-  chatMessage: (message: ChatMessageContent) => void;
-  userOnline: () => void;
-  userOffline: () => void;
-}
+import socket from "socket.io";
 
 export interface ClientToServerEvents {
-  chatMessage: (message: any) => void;
+  chatMessage: (message: ChatMessageFromClient) => void;
+}
+
+export interface ServerToClientEvents {
+  chatMessage: (message: ChatMessageToClient) => void;
+  userOnline: ({ userId: string }) => void;
+  userOffline: ({ userId: string }) => void;
 }
 
 export interface InterServerEvents {
@@ -15,18 +16,25 @@ export interface InterServerEvents {
 }
 
 export interface SocketData {
-  user: {
-    userName: string;
+  user?: {
+    userName?: string;
   };
 }
 
-declare module "http" {
-  interface IncomingMessage {
-    session: Session & { user?: { userName?: string } };
-  }
-}
-
-export interface ChatMessageContent {
-  message: string;
+export interface ChatMessageFromClient {
+  content: string;
   to: string;
 }
+
+export interface ChatMessageToClient {
+  content: string;
+  timestamp: number;
+  from: string;
+}
+
+export type Socket = socket.Socket<
+  ClientToServerEvents,
+  ServerToClientEvents,
+  InterServerEvents,
+  SocketData
+>;

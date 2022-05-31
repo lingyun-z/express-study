@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import * as session from "express-session";
-import { Socket } from "socket.io";
+import { Socket } from "../types";
 import sessionStore from "../../lib/sessionStore";
 
 export const sessionMiddleware = (

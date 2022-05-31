@@ -22,8 +22,8 @@ const corsConfig = {
 
 const websocketServerSetup = (httpServer: http.Server) => {
   const io = new Server<
-    ServerToClientEvents,
     ClientToServerEvents,
+    ServerToClientEvents,
     InterServerEvents,
     SocketData
   >(httpServer, {

@@ -1,8 +1,8 @@
-import { Socket } from "socket.io";
+import { Socket } from "../types";
 import { socketUserService } from "../../service";
 
 export const connectHandler = async (socket: Socket) => {
-  const userId = socket.request.session.user?.userName;
+  const userId = socket.data.user?.userName;
 
   if (userId) {
     const username = userId;

@@ -12,13 +12,3 @@ declare module "express-session" {
     };
   }
 }
-
-declare module "http" {
-  interface IncomingMessage {
-    session: Session & {
-      user?: {
-        userName?: string;
-      };
-    };
-  }
-}

@@ -1,8 +1,9 @@
-import { Socket } from "socket.io";
+import { Socket } from "../types";
 import { socketUserService } from "../../service";
 
 export const disconnectHandler = (socket: Socket) => {
-  const userId = socket.request.session.user?.userName;
+  const userId = socket.data.user?.userName;
   socket.broadcast.emit("userOffline", { userId });
+
   return socketUserService.deleteSocketUser(userId);
 };
