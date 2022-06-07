@@ -3,6 +3,7 @@ import loginRouter from "./login.route";
 import pingRouter from "./ping.route";
 import redisRouter from "./redis.route";
 import chatRouter from "./chat.route";
+import userRouter from "./user.route";
 
 class IndexRouter {
   public router: Router;
@@ -17,6 +18,7 @@ class IndexRouter {
     this.router.use("/ping", pingRouter);
     this.router.use("/redis", redisRouter);
     this.router.use("/chat", chatRouter);
+    this.router.use("/user", userRouter);
   }
 }
 

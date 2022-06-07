@@ -4,10 +4,11 @@ import { createServer } from "http";
 import { sessionMiddleware } from "./middleware/sessionMiddleware";
 import router from "./router";
 import websocketServerSetup from "./websocket";
+import { errorMap } from "./types/errorMap";
 
 const corsConfig = {
   credentials: true,
-  origin: "http://localhost:3000",
+  origin: ["http://localhost:3000"],
 };
 
 const app = express();
@@ -25,7 +26,12 @@ app.use(
     res: express.Response,
     next: express.NextFunction
   ) => {
-    res.status(500).json(err);
+    const { code, message } = errorMap[err.message] ?? {
+      code: 500,
+      message: err.message,
+    };
+
+    res.status(code).json({ message });
   }
 );
 
